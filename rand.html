@@ -7,34 +7,45 @@
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
 
-    var clickX = new Array();
-    var clickY = new Array();
-    var x;
-    var y;
-    var i = 100;
-    while (i <= 400) {
-        var j = 100; 
-        while (j <= 400) {
-            x = Math.floor((Math.random() * 20) + 7);
-            y = Math.floor((Math.random() * 20) + 7);
-            if (isFree(j, i, x, y)) {
-                context.beginPath();
-                context.rect(j, i, x, y);
-                context.fillStyle = 'white';
-                context.fill();
-                context.lineWidth = 2;
-//        context.rotate(0.5);
-                context.stroke();
-            }
-        j = j + 8;
-        }
-    i = i + 8;
+    var width = 400;
+    var height = 400;
+
+    context.beginPath();
+    context.rect(0, 0, width, height);
+    context.lineWidth = 2;
+    context.stroke();
+
+    function road(x1, y1, x2, y2) {
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.lineWidth = 5;
+        context.strokeStyle = 'white';
+        context.stroke();
     }
 
-    var message = isFree(200, 200, 10, 10);
-    context.font = '18pt Calibri';
-    context.fillStyle = 'black';
-    context.fillText(message, 10, 25);
+    road(Math.floor(Math.random() * width), 0, Math.floor(Math.random() * width), height)
+    road(0, Math.floor(Math.random() * height), width, Math.floor(Math.random() * width))
+
+    var i = 0;
+    while (i <= height) {
+        var j = 0; 
+        while (j <= width) {
+            rectangularHouse(j, i, 25)
+            rectangularHouse(j, i, 20)
+            cornerHouse(j, i, 20);
+            rectangularHouse(j, i, 15)
+            rectangularHouse(j, i, 10)
+            cornerHouse(j, i, 10);
+            j = j + 8;
+        }
+        i = i + 8;
+    }
+
+//    var message = isFree(200, 200, 10, 10);
+//    context.font = '18pt Calibri';
+//    context.fillStyle = 'black';
+//    context.fillText(message, 10, 25);
 
     function isFree(x, y, xlength, ylength) {
         var imgData = context.getImageData(x, y, xlength, ylength);
@@ -44,7 +55,42 @@
             }
         }
         return true;
-    } 
+    }
+    function rectangularHouse(x, y, seed) {
+        var x = Math.floor((Math.random() * seed) + 7);
+        var y = Math.floor((Math.random() * seed) + 7);
+        if (isFree(j, i, x, y)) {
+            context.beginPath();
+            context.rect(j, i, x, y);
+            context.fillStyle = 'white';
+            context.fill();
+            context.lineWidth = 2;
+            context.strokeStyle = 'black';
+            context.stroke();
+        }
+    }
+
+    function cornerHouse(x, y, seed) {
+        var direction = new Array('tl', 'tr', 'br', 'bl');
+        var rand1 = Math.floor((Math.random() * seed) + 5);
+        var rand2 = Math.floor((Math.random() * seed) + 5);
+        var rand3 = Math.floor((Math.random() * seed) + 5);
+        var rand4 = Math.floor((Math.random() * seed) + 5);
+        if (isFree(x, y, rand1, rand2) && isFree(x, y + rand2, rand1 + rand3, rand4)) {
+            context.beginPath();
+            context.moveTo(x, y);
+            context.lineTo(x + rand1, y);
+            context.lineTo(x + rand1, y + rand2);
+            context.lineTo(x + rand1 + rand3, y + rand2);
+            context.lineTo(x + rand1 + rand3, y + rand2 + rand4);
+            context.lineTo(x, y + rand2 + rand4);
+            context.closePath();
+            context.fillStyle = 'white';
+            context.fill();
+            context.lineWidth = 2;
+            context.stroke();
+        }
+    }
 
 </script>
 </body>
