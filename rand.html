@@ -1,0 +1,51 @@
+<html>
+<body>
+<canvas id="myCanvas" width="1578" height="1200"></canvas>
+
+<script>
+
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    var clickX = new Array();
+    var clickY = new Array();
+    var x;
+    var y;
+    var i = 100;
+    while (i <= 400) {
+        var j = 100; 
+        while (j <= 400) {
+            x = Math.floor((Math.random() * 20) + 7);
+            y = Math.floor((Math.random() * 20) + 7);
+            if (isFree(j, i, x, y)) {
+                context.beginPath();
+                context.rect(j, i, x, y);
+                context.fillStyle = 'white';
+                context.fill();
+                context.lineWidth = 2;
+//        context.rotate(0.5);
+                context.stroke();
+            }
+        j = j + 8;
+        }
+    i = i + 8;
+    }
+
+    var message = isFree(200, 200, 10, 10);
+    context.font = '18pt Calibri';
+    context.fillStyle = 'black';
+    context.fillText(message, 10, 25);
+
+    function isFree(x, y, xlength, ylength) {
+        var imgData = context.getImageData(x, y, xlength, ylength);
+        for (k=0; k < imgData.data.length; k++) {
+            if (imgData.data[k] != 0) {
+                return false;
+            }
+        }
+        return true;
+    } 
+
+</script>
+</body>
+</html>
