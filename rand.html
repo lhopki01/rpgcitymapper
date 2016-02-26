@@ -35,7 +35,7 @@
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
-        context.lineWidth = 5;
+        context.lineWidth = 1;
         context.strokeStyle = 'red';
         context.stroke();
     }
@@ -75,6 +75,12 @@
         context.stroke();
     }
 
+    function findVector(x, y) {
+        var Xs = new Array(-1, 0, 1, 1, 1, 0, -1, -1);
+        var Ys = new Array(-1, -1, -1, 0, 1, 1, 1, 0);
+        
+    }
+
     function house2(x, y) {
         var xArray = new Array();
         var yArray = new Array();
@@ -102,7 +108,6 @@
         if (edgesX.length == 1) {
             xArray = [];
             yArray = [];
-            
         }
         drawHouse(xArray, yArray);
         drawCircle(x, y, 1);
