@@ -1,0 +1,87 @@
+<html>
+<body>
+<canvas id="myCanvas" width="1578" height="1200"></canvas>
+
+<script>
+
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    var clickX = new Array();
+    var clickY = new Array();
+
+//    clickX = [150, 300, 450, 350, 50, 150];
+//    clickY = [450, 400, 250, 50, 200, 450];
+
+
+    document.addEventListener("click", function(evt) {
+        var mousePos = getMousePos(canvas, evt);
+        clickX.push(mousePos.x);
+        clickY.push(mousePos.y);
+        draw();
+    });
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+     }
+    function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
+        for(var i=0; i <= clickX.length; i++) {
+            context.moveTo(clickX[i], clickY[i]);
+            context.lineTo(clickX[i+1], clickY[i+1]);
+            context.lineWidth = 15;
+            context.strokeStyle = 'DarkSlateGrey';
+            context.lineCap = 'round';
+            context.stroke();
+            context.moveTo(clickX[i], clickY[i]);
+            context.lineTo(clickX[i+1], clickY[i+1]);
+            context.lineWidth = 5;
+            context.strokeStyle = '#FFFFFF';
+            context.lineCap = 'round';
+            context.stroke();
+        }
+        context.moveTo(clickX[clickX.length - 1], clickY[clickY.length - 1]);
+        context.lineTo(clickX[0], clickY[0]);
+        context.lineWidth = 15;
+        context.strokeStyle = 'DarkSlateGrey';
+        context.lineCap = 'round';
+        context.stroke();
+        context.moveTo(clickX[clickX.length - 1], clickY[clickY.length - 1]);
+        context.lineTo(clickX[0], clickY[0]);
+        context.lineWidth = 5;
+        context.strokeStyle = '#FFFFFF';
+        context.lineCap = 'round';
+        context.stroke();
+
+        for(var i=0; i <= clickX.length; i++) {
+            context.beginPath();
+            context.arc(clickX[i], clickY[i], 20, 0, 2 * Math.PI, false);
+            context.fillStyle = 'white';
+            context.fill();
+            context.lineWidth = 5;
+            context.strokeStyle = 'DarkSlateGrey';
+            context.stroke();
+        }
+//        context.beginPath();
+//        context.arc(clickX[clickX.length - 1], clickY[clickY.length - 1], 20, 0, 2 * Math.PI, false);
+//        context.fillStyle = 'white';
+//        context.fill();
+//        context.lineWidth = 5;
+//        context.strokeStyle = 'DarkSlateGrey';
+//        context.stroke();
+//        context.beginPath();
+//        context.arc(clickX[0], clickY[0], 20, 0, 2 * Math.PI, false);
+//        context.fillStyle = 'white';
+//        context.fill();
+//        context.lineWidth = 5;
+//        context.strokeStyle = 'DarkSlateGrey';
+//        context.stroke();
+      }
+
+</script>
+</body>
+</html>
