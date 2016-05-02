@@ -44,6 +44,7 @@
             context.lineCap = 'round';
             context.stroke();
         }
+// Draw final wall
         context.moveTo(clickX[clickX.length - 1], clickY[clickY.length - 1]);
         context.lineTo(clickX[0], clickY[0]);
         context.lineWidth = 15;
@@ -56,7 +57,7 @@
         context.strokeStyle = '#FFFFFF';
         context.lineCap = 'round';
         context.stroke();
-
+// Draw towers
         for(var i=0; i <= clickX.length; i++) {
             context.beginPath();
             context.arc(clickX[i], clickY[i], 20, 0, 2 * Math.PI, false);
